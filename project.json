@@ -1,0 +1,771 @@
+{
+	"lastBuffer": "main.cpp",
+	"PNGFlags": {
+		"ALL": [
+			"palette=${appPath}/PokittoLib/Pokitto/POKITTO_CORE/PALETTES/palCGA.cpp"
+		]
+	},
+	"libs": {
+		"Pokitto": [
+			{
+				"recurse": "${appPath}/PokittoLib/Pokitto",
+				"ignore": "POKITTO_SIM|POKITTO_XTERNALS|Documentation|examples?|Physics|(?:.*_SIM.*)|main.cpp"
+			}
+		]
+	},
+	"SFlags": {
+		"Pokitto": [
+			"-I${projectPath}",
+			"-mcpu=cortex-m0plus",
+			"-mthumb"
+		]
+	},
+	"CPPFlags": {
+		"DEBUG": [
+			"-Og",
+			"-g3",
+			"-ggdb"
+		],
+		"RELEASE": [
+			"-O3"
+		],
+		"Pokitto": [
+			"-DPROJ_FPS=60",
+			"-I${projectPath}",
+			"-DPOKITTO",
+			"-fno-rtti",
+			"-Wno-pointer-arith",
+			"-c",
+			"-fno-exceptions",
+			"-fno-builtin",
+			"-ffunction-sections",
+			"-fdata-sections",
+			"-funsigned-char",
+			"-MMD",
+			"-fno-delete-null-pointer-checks",
+			"-fomit-frame-pointer",
+			"-mcpu=cortex-m0plus",
+			"-mthumb",
+			"-Wno-psabi",
+			"-Wno-conversion-null",
+			"-Wno-narrowing",
+			"-Wno-write-strings",
+			"-DTARGET_LPC11U68",
+			"-D__MBED__=1",
+			"-DDEVICE_I2CSLAVE=1",
+			"-DTARGET_LIKE_MBED",
+			"-DTARGET_NXP",
+			"-D__MBED_CMSIS_RTOS_CM",
+			"-DDEVICE_RTC=1",
+			"-DTOOLCHAIN_object",
+			"-D__CMSIS_RTOS",
+			"-DTOOLCHAIN_GCC",
+			"-DTARGET_CORTEX_M",
+			"-DTARGET_M0P",
+			"-DTARGET_UVISOR_UNSUPPORTED",
+			"-DDEVICE_SERIAL=1",
+			"-DDEVICE_INTERRUPTIN=1",
+			"-DTARGET_LPCTarget",
+			"-DTARGET_CORTEX",
+			"-DDEVICE_I2C=1",
+			"-D__CORTEX_M0PLUS",
+			"-DTARGET_FF_ARDUINO",
+			"-DTARGET_RELEASE",
+			"-DMBED_BUILD_TIMESTAMP=1526394586.66",
+			"-DARM_MATH_CM0PLUS",
+			"-DTARGET_LPC11U6X",
+			"-DDEVICE_SLEEP=1",
+			"-DTOOLCHAIN_GCC_ARM",
+			"-DDEVICE_SPI=1",
+			"-DDEVICE_ANALOGIN=1",
+			"-DDEVICE_PWMOUT=1",
+			"-DTARGET_LIKE_CORTEX_M0"
+		],
+		"Desktop": [
+			"-I${projectPath}",
+			"-DDESKTOP",
+			"-fno-rtti",
+			"-Wno-pointer-arith",
+			"-c",
+			"-fno-exceptions",
+			"-fno-builtin",
+			"-ffunction-sections",
+			"-fdata-sections",
+			"-funsigned-char",
+			"-MMD",
+			"-fno-delete-null-pointer-checks"
+		],
+		"ALL": [
+			"-std=c++14"
+		]
+	},
+	"CFlags": {
+		"DEBUG": [
+			"-Og",
+			"-g3",
+			"-ggdb"
+		],
+		"RELEASE": [
+			"-O3"
+		],
+		"Pokitto": [
+			"-I${projectPath}",
+			"-DPOKITTO",
+			"-Wno-pointer-arith",
+			"-c",
+			"-fno-exceptions",
+			"-fno-builtin",
+			"-ffunction-sections",
+			"-fdata-sections",
+			"-funsigned-char",
+			"-MMD",
+			"-fno-delete-null-pointer-checks",
+			"-fomit-frame-pointer",
+			"-mcpu=cortex-m0plus",
+			"-mthumb",
+			"-Wno-psabi",
+			"-Wwrite-strings",
+			"-DTARGET_LPC11U68",
+			"-D__MBED__=1",
+			"-DDEVICE_I2CSLAVE=1",
+			"-DTARGET_LIKE_MBED",
+			"-DTARGET_NXP",
+			"-D__MBED_CMSIS_RTOS_CM",
+			"-DDEVICE_RTC=1",
+			"-DTOOLCHAIN_object",
+			"-D__CMSIS_RTOS",
+			"-DTOOLCHAIN_GCC",
+			"-DTARGET_CORTEX_M",
+			"-DTARGET_M0P",
+			"-DTARGET_UVISOR_UNSUPPORTED",
+			"-DDEVICE_SERIAL=1",
+			"-DDEVICE_INTERRUPTIN=1",
+			"-DTARGET_LPCTarget",
+			"-DTARGET_CORTEX",
+			"-DDEVICE_I2C=1",
+			"-D__CORTEX_M0PLUS",
+			"-DTARGET_FF_ARDUINO",
+			"-DTARGET_RELEASE",
+			"-DMBED_BUILD_TIMESTAMP=1526394586.66",
+			"-DARM_MATH_CM0PLUS",
+			"-DTARGET_LPC11U6X",
+			"-DDEVICE_SLEEP=1",
+			"-DTOOLCHAIN_GCC_ARM",
+			"-DDEVICE_SPI=1",
+			"-DDEVICE_ANALOGIN=1",
+			"-DDEVICE_PWMOUT=1",
+			"-DTARGET_LIKE_CORTEX_M0"
+		],
+		"Desktop": [
+			"-I${projectPath}",
+			"-DDESKTOP",
+			"-fno-rtti",
+			"-Wno-pointer-arith",
+			"-c",
+			"-fno-exceptions",
+			"-fno-builtin",
+			"-ffunction-sections",
+			"-fdata-sections",
+			"-funsigned-char",
+			"-MMD",
+			"-fno-delete-null-pointer-checks"
+		],
+		"ALL": []
+	},
+	"GDBFlags": {
+		"Pokitto": [
+			"${projectPath}/${projectName}.elf"
+		]
+	},
+	"emuFlags": {
+		"Pokitto": [
+			"${projectPath}/${projectName}.bin"
+		]
+	},
+	"ELF2BINFlags": {
+		"Pokitto": [
+			"-O",
+			"binary",
+			"${projectPath}/${projectName}.elf",
+			"${projectPath}/${projectName}.bin"
+		]
+	},
+	"LDFlags": {
+		"RELEASE": [
+			"-O3"
+		],
+		"DEBUG": [
+			"-Og",
+			"-g3",
+			"-ggdb"
+		],
+		"Pokitto": [
+			"-Wl,--gc-sections",
+			"-Wl,-n",
+			"--specs=nano.specs",
+			"-mcpu=cortex-m0plus",
+			"-mthumb",
+			"-Wl,--undefined=g_pfnVectors",
+			"-Wl,--undefined=boot",
+			"-T",
+			"${appPath}/PokittoLib/Pokitto/mbed-pokitto/targets/cmsis/TARGET_NXP/TARGET_LPC11U6X/TOOLCHAIN_GCC_ARM/TARGET_LPC11U68/LPC11U68.ld",
+			"--output",
+			"${projectPath}/${projectName}.elf",
+			"$objectFiles",
+			"-Wl,--start-group",
+			"-lstdc++",
+			"-lsupc++",
+			"-lm",
+			"-lc",
+			"-lgcc",
+			"-lnosys",
+			"-Wl,--end-group"
+		]
+	},
+	"target": "Pokitto",
+	"pipelines": {
+		"Pokitto": [
+			"img-to-c",
+			"compile-cpp",
+			"compile-ld",
+			"compile-bin",
+			"make-img"
+		],
+		"Desktop": [
+			"compile-cpp",
+			"compile-ld",
+			"compile-bin"
+		]
+	},
+	"meta": {
+		"": {},
+		"/Bacon.png": {
+			"sdcard": false
+		},
+		"/Hello CPP.bin": {
+			"sdcard": false
+		},
+		"/File.cpp": {
+			"sdcard": false
+		},
+		"/Hello CPP.elf": {
+			"sdcard": false
+		},
+		"/My_settings.h": {
+			"sdcard": false
+		},
+		"/Smile.h": {
+			"sdcard": false
+		},
+		"/Smile.png": {
+			"sdcard": false
+		},
+		"/Test.h": {
+			"sdcard": false
+		},
+		"/Test.png": {
+			"sdcard": true
+		},
+		"/main.cpp": {
+			"sdcard": false
+		},
+		"/project.json": {
+			"sdcard": false
+		},
+		"/Arduino-IRremote": {
+			"sdcard": false
+		},
+		"/Arduino-IRremote/Contributing.md": {
+			"sdcard": false
+		},
+		"/Arduino-IRremote/Contributors.md": {
+			"sdcard": false
+		},
+		"/Arduino-IRremote/IRremote.cpp": {
+			"sdcard": false
+		},
+		"/Arduino-IRremote/IRremote.h": {
+			"sdcard": false
+		},
+		"/Arduino-IRremote/IRremoteInt.h": {
+			"sdcard": false
+		},
+		"/Arduino-IRremote/ISSUE_TEMPLATE.md": {
+			"sdcard": false
+		},
+		"/Arduino-IRremote/LICENSE.txt": {
+			"sdcard": false
+		},
+		"/Arduino-IRremote/README.md": {
+			"sdcard": false
+		},
+		"/Arduino-IRremote/arduino-irremote.sublime-workspace": {
+			"sdcard": false
+		},
+		"/Arduino-IRremote/boarddefs.h": {
+			"sdcard": false
+		},
+		"/Arduino-IRremote/changelog.md": {
+			"sdcard": false
+		},
+		"/Arduino-IRremote/examples": {
+			"sdcard": false
+		},
+		"/Arduino-IRremote/irPronto.cpp": {
+			"sdcard": false
+		},
+		"/Arduino-IRremote/irRecv.cpp": {
+			"sdcard": false
+		},
+		"/Arduino-IRremote/irSend.cpp": {
+			"sdcard": false
+		},
+		"/Arduino-IRremote/ir_Aiwa.cpp": {
+			"sdcard": false
+		},
+		"/Arduino-IRremote/ir_Denon.cpp": {
+			"sdcard": false
+		},
+		"/Arduino-IRremote/ir_Dish.cpp": {
+			"sdcard": false
+		},
+		"/Arduino-IRremote/ir_JVC.cpp": {
+			"sdcard": false
+		},
+		"/Arduino-IRremote/ir_LG.cpp": {
+			"sdcard": false
+		},
+		"/Arduino-IRremote/ir_Lego_PF.cpp": {
+			"sdcard": false
+		},
+		"/Arduino-IRremote/ir_Lego_PF_BitStreamEncoder.h": {
+			"sdcard": false
+		},
+		"/Arduino-IRremote/ir_Mitsubishi.cpp": {
+			"sdcard": false
+		},
+		"/Arduino-IRremote/ir_NEC.cpp": {
+			"sdcard": false
+		},
+		"/Arduino-IRremote/ir_Panasonic.cpp": {
+			"sdcard": false
+		},
+		"/Arduino-IRremote/ir_RC5_RC6.cpp": {
+			"sdcard": false
+		},
+		"/Arduino-IRremote/ir_Samsung.cpp": {
+			"sdcard": false
+		},
+		"/Arduino-IRremote/ir_Sanyo.cpp": {
+			"sdcard": false
+		},
+		"/Arduino-IRremote/ir_Sharp.cpp": {
+			"sdcard": false
+		},
+		"/Arduino-IRremote/ir_Sony.cpp": {
+			"sdcard": false
+		},
+		"/Arduino-IRremote/ir_Template.cpp": {
+			"sdcard": false
+		},
+		"/Arduino-IRremote/ir_Whynter.cpp": {
+			"sdcard": false
+		},
+		"/Arduino-IRremote/keywords.txt": {
+			"sdcard": false
+		},
+		"/Arduino-IRremote/library.json": {
+			"sdcard": false
+		},
+		"/Arduino-IRremote/library.properties": {
+			"sdcard": false
+		},
+		"/Arduino-IRremote/readmdFrench.md": {
+			"sdcard": false
+		},
+		"/Arduino-IRremote/examples/AiwaRCT501SendDemo": {
+			"sdcard": false
+		},
+		"/Arduino-IRremote/examples/IRrecord": {
+			"sdcard": false
+		},
+		"/Arduino-IRremote/examples/IRrecvDemo": {
+			"sdcard": false
+		},
+		"/Arduino-IRremote/examples/IRrecvDump": {
+			"sdcard": false
+		},
+		"/Arduino-IRremote/examples/IRrecvDumpV2": {
+			"sdcard": false
+		},
+		"/Arduino-IRremote/examples/IRrelay": {
+			"sdcard": false
+		},
+		"/Arduino-IRremote/examples/IRremoteInfo": {
+			"sdcard": false
+		},
+		"/Arduino-IRremote/examples/IRsendDemo": {
+			"sdcard": false
+		},
+		"/Arduino-IRremote/examples/IRsendRawDemo": {
+			"sdcard": false
+		},
+		"/Arduino-IRremote/examples/IRtest": {
+			"sdcard": false
+		},
+		"/Arduino-IRremote/examples/IRtest2": {
+			"sdcard": false
+		},
+		"/Arduino-IRremote/examples/JVCPanasonicSendDemo": {
+			"sdcard": false
+		},
+		"/Arduino-IRremote/examples/LGACSendDemo": {
+			"sdcard": false
+		},
+		"/Arduino-IRremote/examples/LegoPowerFunctionsSendDemo": {
+			"sdcard": false
+		},
+		"/Arduino-IRremote/examples/LegoPowerFunctionsTests": {
+			"sdcard": false
+		},
+		"/Arduino-IRremote/examples/AiwaRCT501SendDemo/AiwaRCT501SendDemo.ino": {
+			"sdcard": false
+		},
+		"/Arduino-IRremote/examples/IRrecord/IRrecord.ino": {
+			"sdcard": false
+		},
+		"/Arduino-IRremote/examples/IRrecvDemo/IRrecvDemo.ino": {
+			"sdcard": false
+		},
+		"/Arduino-IRremote/examples/IRrecvDump/IRrecvDump.ino": {
+			"sdcard": false
+		},
+		"/Arduino-IRremote/examples/IRrecvDumpV2/IRrecvDumpV2.ino": {
+			"sdcard": false
+		},
+		"/Arduino-IRremote/examples/IRrelay/IRrelay.ino": {
+			"sdcard": false
+		},
+		"/Arduino-IRremote/examples/IRremoteInfo/IRremoteInfo.ino": {
+			"sdcard": false
+		},
+		"/Arduino-IRremote/examples/IRsendDemo/IRsendDemo.ino": {
+			"sdcard": false
+		},
+		"/Arduino-IRremote/examples/IRsendRawDemo/IRsendRawDemo.ino": {
+			"sdcard": false
+		},
+		"/Arduino-IRremote/examples/IRtest/IRtest.ino": {
+			"sdcard": false
+		},
+		"/Arduino-IRremote/examples/IRtest2/IRtest2.ino": {
+			"sdcard": false
+		},
+		"/Arduino-IRremote/examples/JVCPanasonicSendDemo/JVCPanasonicSendDemo.ino": {
+			"sdcard": false
+		},
+		"/Arduino-IRremote/examples/LGACSendDemo/LGACSendDemo.ino": {
+			"sdcard": false
+		},
+		"/Arduino-IRremote/examples/LGACSendDemo/LGACSendDemo.md": {
+			"sdcard": false
+		},
+		"/Arduino-IRremote/examples/LegoPowerFunctionsSendDemo/LegoPowerFunctionsSendDemo.ino": {
+			"sdcard": false
+		},
+		"/Arduino-IRremote/examples/LegoPowerFunctionsTests/LegoPowerFunctionsTests.ino": {
+			"sdcard": false
+		},
+		"/IRremote": {
+			"sdcard": false
+		},
+		"/IRremote/Contributing.md": {
+			"sdcard": false
+		},
+		"/IRremote/IRremote.cpp": {
+			"sdcard": false
+		},
+		"/IRremote/IRremote.h": {
+			"sdcard": false
+		},
+		"/IRremote/Contributors.md": {
+			"sdcard": false
+		},
+		"/IRremote/IRremoteInt.h": {
+			"sdcard": false
+		},
+		"/IRremote/ISSUE_TEMPLATE.md": {
+			"sdcard": false
+		},
+		"/IRremote/LICENSE.txt": {
+			"sdcard": false
+		},
+		"/IRremote/README.md": {
+			"sdcard": false
+		},
+		"/IRremote/arduino-irremote.sublime-workspace": {
+			"sdcard": false
+		},
+		"/IRremote/boarddefs.h": {
+			"sdcard": false
+		},
+		"/IRremote/changelog.md": {
+			"sdcard": false
+		},
+		"/IRremote/examples": {
+			"sdcard": false
+		},
+		"/IRremote/irPronto.cpp": {
+			"sdcard": false
+		},
+		"/IRremote/irRecv.cpp": {
+			"sdcard": false
+		},
+		"/IRremote/irSend.cpp": {
+			"sdcard": false
+		},
+		"/IRremote/ir_Aiwa.cpp": {
+			"sdcard": false
+		},
+		"/IRremote/ir_Denon.cpp": {
+			"sdcard": false
+		},
+		"/IRremote/ir_Dish.cpp": {
+			"sdcard": false
+		},
+		"/IRremote/ir_JVC.cpp": {
+			"sdcard": false
+		},
+		"/IRremote/ir_LG.cpp": {
+			"sdcard": false
+		},
+		"/IRremote/ir_Lego_PF.cpp": {
+			"sdcard": false
+		},
+		"/IRremote/ir_Lego_PF_BitStreamEncoder.h": {
+			"sdcard": false
+		},
+		"/IRremote/ir_Mitsubishi.cpp": {
+			"sdcard": false
+		},
+		"/IRremote/ir_NEC.cpp": {
+			"sdcard": false
+		},
+		"/IRremote/ir_Panasonic.cpp": {
+			"sdcard": false
+		},
+		"/IRremote/ir_RC5_RC6.cpp": {
+			"sdcard": false
+		},
+		"/IRremote/ir_Samsung.cpp": {
+			"sdcard": false
+		},
+		"/IRremote/ir_Sanyo.cpp": {
+			"sdcard": false
+		},
+		"/IRremote/ir_Sharp.cpp": {
+			"sdcard": false
+		},
+		"/IRremote/ir_Sony.cpp": {
+			"sdcard": false
+		},
+		"/IRremote/ir_Template.cpp": {
+			"sdcard": false
+		},
+		"/IRremote/ir_Whynter.cpp": {
+			"sdcard": false
+		},
+		"/IRremote/keywords.txt": {
+			"sdcard": false
+		},
+		"/IRremote/library.json": {
+			"sdcard": false
+		},
+		"/IRremote/library.properties": {
+			"sdcard": false
+		},
+		"/IRremote/readmdFrench.md": {
+			"sdcard": false
+		},
+		"/IRremote/examples/AiwaRCT501SendDemo": {
+			"sdcard": false
+		},
+		"/IRremote/examples/IRrecord": {
+			"sdcard": false
+		},
+		"/IRremote/examples/IRrecvDemo": {
+			"sdcard": false
+		},
+		"/IRremote/examples/IRrecvDump": {
+			"sdcard": false
+		},
+		"/IRremote/examples/IRrecvDumpV2": {
+			"sdcard": false
+		},
+		"/IRremote/examples/IRrelay": {
+			"sdcard": false
+		},
+		"/IRremote/examples/IRremoteInfo": {
+			"sdcard": false
+		},
+		"/IRremote/examples/IRsendDemo": {
+			"sdcard": false
+		},
+		"/IRremote/examples/IRsendRawDemo": {
+			"sdcard": false
+		},
+		"/IRremote/examples/IRtest": {
+			"sdcard": false
+		},
+		"/IRremote/examples/IRtest2": {
+			"sdcard": false
+		},
+		"/IRremote/examples/JVCPanasonicSendDemo": {
+			"sdcard": false
+		},
+		"/IRremote/examples/LGACSendDemo": {
+			"sdcard": false
+		},
+		"/IRremote/examples/LegoPowerFunctionsSendDemo": {
+			"sdcard": false
+		},
+		"/IRremote/examples/LegoPowerFunctionsTests": {
+			"sdcard": false
+		},
+		"/IRremote/examples/AiwaRCT501SendDemo/AiwaRCT501SendDemo.ino": {
+			"sdcard": false
+		},
+		"/IRremote/examples/IRrecord/IRrecord.ino": {
+			"sdcard": false
+		},
+		"/IRremote/examples/IRrecvDemo/IRrecvDemo.ino": {
+			"sdcard": false
+		},
+		"/IRremote/examples/IRrecvDump/IRrecvDump.ino": {
+			"sdcard": false
+		},
+		"/IRremote/examples/IRrecvDumpV2/IRrecvDumpV2.ino": {
+			"sdcard": false
+		},
+		"/IRremote/examples/IRrelay/IRrelay.ino": {
+			"sdcard": false
+		},
+		"/IRremote/examples/IRremoteInfo/IRremoteInfo.ino": {
+			"sdcard": false
+		},
+		"/IRremote/examples/IRsendDemo/IRsendDemo.ino": {
+			"sdcard": false
+		},
+		"/IRremote/examples/IRsendRawDemo/IRsendRawDemo.ino": {
+			"sdcard": false
+		},
+		"/IRremote/examples/IRtest/IRtest.ino": {
+			"sdcard": false
+		},
+		"/IRremote/examples/IRtest2/IRtest2.ino": {
+			"sdcard": false
+		},
+		"/IRremote/examples/JVCPanasonicSendDemo/JVCPanasonicSendDemo.ino": {
+			"sdcard": false
+		},
+		"/IRremote/examples/LGACSendDemo/LGACSendDemo.ino": {
+			"sdcard": false
+		},
+		"/IRremote/examples/LGACSendDemo/LGACSendDemo.md": {
+			"sdcard": false
+		},
+		"/IRremote/examples/LegoPowerFunctionsSendDemo/LegoPowerFunctionsSendDemo.ino": {
+			"sdcard": false
+		},
+		"/IRremote/examples/LegoPowerFunctionsTests/LegoPowerFunctionsTests.ino": {
+			"sdcard": false
+		},
+		"/IRremote_ID3820": {
+			"sdcard": false
+		},
+		"/IRremote_ID3820/Contributors.md": {
+			"sdcard": false
+		},
+		"/IRremote_ID3820/IRremote.h": {
+			"sdcard": false
+		},
+		"/IRremote_ID3820/IRremote.cpp": {
+			"sdcard": false
+		},
+		"/IRremote_ID3820/IRremoteInt.h": {
+			"sdcard": false
+		},
+		"/IRremote_ID3820/LICENSE.txt": {
+			"sdcard": false
+		},
+		"/IRremote_ID3820/README.md": {
+			"sdcard": false
+		},
+		"/IRremote_ID3820/changelog.md": {
+			"sdcard": false
+		},
+		"/IRremote_ID3820/irPronto.cpp": {
+			"sdcard": false
+		},
+		"/IRremote_ID3820/irRecv.cpp": {
+			"sdcard": false
+		},
+		"/IRremote_ID3820/irSend.cpp": {
+			"sdcard": false
+		},
+		"/IRremote_ID3820/ir_Aiwa.cpp": {
+			"sdcard": false
+		},
+		"/IRremote_ID3820/ir_Denon.cpp": {
+			"sdcard": false
+		},
+		"/IRremote_ID3820/ir_Dish.cpp": {
+			"sdcard": false
+		},
+		"/IRremote_ID3820/ir_JVC.cpp": {
+			"sdcard": false
+		},
+		"/IRremote_ID3820/ir_LG.cpp": {
+			"sdcard": false
+		},
+		"/IRremote_ID3820/ir_Mitsubishi.cpp": {
+			"sdcard": false
+		},
+		"/IRremote_ID3820/ir_NEC.cpp": {
+			"sdcard": false
+		},
+		"/IRremote_ID3820/ir_Panasonic.cpp": {
+			"sdcard": false
+		},
+		"/IRremote_ID3820/ir_RC5_RC6.cpp": {
+			"sdcard": false
+		},
+		"/IRremote_ID3820/ir_Samsung.cpp": {
+			"sdcard": false
+		},
+		"/IRremote_ID3820/ir_Sanyo.cpp": {
+			"sdcard": false
+		},
+		"/IRremote_ID3820/ir_Sharp.cpp": {
+			"sdcard": false
+		},
+		"/IRremote_ID3820/ir_Sony.cpp": {
+			"sdcard": false
+		},
+		"/IRremote_ID3820/ir_Template.cpp": {
+			"sdcard": false
+		},
+		"/IRremote_ID3820/ir_Whynter.cpp": {
+			"sdcard": false
+		},
+		"/IRremote_ID3820/library.json": {
+			"sdcard": false
+		},
+		"/PokittoIR.elf": {
+			"sdcard": false
+		},
+		"/PokittoIR.bin": {
+			"sdcard": false
+		}
+	}
+}
