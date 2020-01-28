@@ -766,6 +766,9 @@
 		},
 		"/PokittoIR.bin": {
 			"sdcard": false
+		},
+		"/README.md": {
+			"sdcard": false
 		}
 	}
 }
