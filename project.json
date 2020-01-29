@@ -769,6 +769,9 @@
 		},
 		"/README.md": {
 			"sdcard": false
+		},
+		"/PokittoIR.bin.1.gif": {
+			"sdcard": false
 		}
 	}
 }

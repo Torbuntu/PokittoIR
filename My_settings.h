@@ -1,2 +1,2 @@
-#define MODE_HI_4COLOR 1
+#define PROJ_SCREENMODE 15
 #define PROJ_EXT0_PWM_ENABLE

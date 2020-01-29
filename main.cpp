@@ -1,7 +1,4 @@
 #include "Pokitto.h"
-
-#include "Smile.h"
-
 #include <IRremote/IRremote.h>
 
 Pokitto::Core pok;
@@ -22,14 +19,9 @@ int main(){
         if( !pok.update() ) 
             continue;
         
-        pok.display.print("Press a button to cycle power.");
+        pok.display.print("Press <A> to cycle power.");
 		if (pok.buttons.aBtn()) {
-			irsend.sendRaw(Signal_0_0, sizeof(Signal_0_0) / sizeof(int),
-					khz);
-		}
-		if (pok.buttons.bBtn()) {
-			irsend.sendRaw(Signal_0_0, sizeof(Signal_0_0) / sizeof(int),
-					khz);
+			irsend.sendRaw(Signal_0_0, sizeof(Signal_0_0) / sizeof(int), khz);
 		}
 
     }
