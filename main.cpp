@@ -22,6 +22,8 @@ unsigned int back[]  = {1950,500, 1950,1000, 350,600, 400,1550, 350,600, 350,600
 unsigned int left[]  = {1950,500, 1950,1000, 350,1550, 350,1550, 400,600, 350,600, 400,1550, 350,600, 400,550, 400,1550, 350,1550, 400,600, 350};
 unsigned int right[] = {2000,500, 1950,950, 400,600, 350,600, 400,1550, 350,600, 400,1550, 350,1550, 350,1550, 400,600, 350,1550, 400,600, 350}; 
 
+unsigned int* output;
+
 int main(){
     using PC=Pokitto::Core;
     using PD=Pokitto::Display;
@@ -35,13 +37,37 @@ int main(){
     irrecv.enableIRIn();
     
     while( PC::isRunning() ){
-        if (irrecv.decode(&results)) {
+        if(PC::buttons.aBtn()){
+            PD::print("Sending signal");
+            PD::update();
+            irsend.enableIROut(khz);
             
+            irsend.sendRaw(Signal_0_0, sizeof(Signal_0_0)/sizeof(int), khz);
+            continue;
+        }
+        
+        if (irrecv.decode(&results)) {
+            PD::clear();
             PD::printf("IR Received type = %d, code = %x\n", results.decode_type, results.value);
+            int count = results.rawlen;
+            for (int i = 1; i < count; i++) {
+                if (i & 1) {
+                  PD::print(results.rawbuf[i]*USECPERTICK);
+                }
+                else {
+                  PD::print('-');
+                  PD::print((unsigned long) results.rawbuf[i]*USECPERTICK);
+                }
+                PD::print(" ");
+            }
+            
+            output = results.rawbuf;
             PD::update();
             
             irrecv.resume(); // Receive the next value
         }
+
+        
     }
     
     return 0;
