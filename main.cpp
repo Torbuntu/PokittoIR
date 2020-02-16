@@ -37,14 +37,7 @@ int main(){
     irrecv.enableIRIn();
     
     while( PC::isRunning() ){
-        if(PC::buttons.aBtn()){
-            PD::print("Sending signal");
-            PD::update();
-            irsend.enableIROut(khz);
-            
-            irsend.sendRaw(Signal_0_0, sizeof(Signal_0_0)/sizeof(int), khz);
-            continue;
-        }
+        
         
         if (irrecv.decode(&results)) {
             PD::clear();
@@ -52,18 +45,37 @@ int main(){
             int count = results.rawlen;
             for (int i = 1; i < count; i++) {
                 if (i & 1) {
-                  PD::print(results.rawbuf[i]*USECPERTICK);
+                    PD::print(results.rawbuf[i]*USECPERTICK);
                 }
                 else {
-                  PD::print('-');
-                  PD::print((unsigned long) results.rawbuf[i]*USECPERTICK);
+                    PD::print('-');
+                    PD::print((unsigned long) results.rawbuf[i]*USECPERTICK);
                 }
                 PD::print(" ");
             }
             
             output = results.rawbuf;
             PD::update();
+        }
+        
+        if(PC::buttons.aBtn()){
+            PD::print("Sending signal");
+            irsend.enableIROut(khz);
             
+            irsend.sendRaw(output, sizeof(output)/sizeof(int), khz);
+            int count = results.rawlen;
+            for (int i = 1; i < count; i++) {
+                if (i & 1) {
+                    PD::print(results.rawbuf[i]*USECPERTICK);
+                }
+                else {
+                    PD::print('-');
+                    PD::print((unsigned long) results.rawbuf[i]*USECPERTICK);
+                }
+                PD::print(" ");
+            }
+            
+            PD::update();
             irrecv.resume(); // Receive the next value
         }
 
