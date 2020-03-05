@@ -22,11 +22,48 @@ unsigned int back[]  = {1950,500, 1950,1000, 350,600, 400,1550, 350,600, 350,600
 unsigned int left[]  = {1950,500, 1950,1000, 350,1550, 350,1550, 400,600, 350,600, 400,1550, 350,600, 400,550, 400,1550, 350,1550, 400,600, 350};
 unsigned int right[] = {2000,500, 1950,950, 400,600, 350,600, 400,1550, 350,600, 400,1550, 350,1550, 350,1550, 400,600, 350,1550, 400,600, 350}; 
 
-unsigned int* output;
+// Storage for the recorded code
+int codeType = -1; // The type of code
+unsigned long codeValue; // The code value if not raw
+unsigned int rawCodes[RAWBUF]; // The durations if raw
+int codeLen; // The length of the code
+int toggle = 0; // The RC5/6 toggle state
+
+
+
+
+using PC=Pokitto::Core;
+using PD=Pokitto::Display;
+
+// Stores the code for later playback
+// Most of this code is just logging
+void storeCode(decode_results *results) {
+    codeType = results->decode_type;
+    //int count = results->rawlen;
+    PD::print("Received unknown code, saving as raw\n");
+    codeLen = results->rawlen - 1;
+    // To store raw codes:
+    // Drop first value (gap)
+    // Convert from ticks to microseconds
+    // Tweak marks shorter, and spaces longer to cancel out IR receiver distortion
+    for (int i = 1; i <= codeLen; i++) {
+      if (i % 2) {
+        // Mark
+        rawCodes[i - 1] = results->rawbuf[i]*USECPERTICK - MARK_EXCESS;
+        PD::print(" m");
+      } 
+      else {
+        // Space
+        rawCodes[i - 1] = results->rawbuf[i]*USECPERTICK + MARK_EXCESS;
+        PD::print(" s");
+      }
+      PD::print(rawCodes[i - 1]);
+    }
+    PD::print("");
+}
 
 int main(){
-    using PC=Pokitto::Core;
-    using PD=Pokitto::Display;
+
     
     PC::begin();
     PD::persistence=true;
@@ -38,49 +75,38 @@ int main(){
     
     while( PC::isRunning() ){
         
-        
-        if (irrecv.decode(&results)) {
+        if(PC::buttons.aBtn()){
+            PD::clear();
+            PD::print("Sending signal");
+            PD::update();
+            irsend.sendRaw(rawCodes, codeLen, 38);
+            
+            int count = results.rawlen;
+            for (int i = 1; i < count; i++) {
+                if (i & 1) {
+                    PD::print(results.rawbuf[i]*USECPERTICK);
+                }
+                else {
+                    PD::print('-');
+                    PD::print((unsigned long) results.rawbuf[i]*USECPERTICK);
+                }
+                PD::print(" ");
+            }
+            wait(1);
+            PD::update();
+        }else if (irrecv.decode(&results)) {
             PD::clear();
             PD::printf("IR Received type = %d, code = %x\n", results.decode_type, results.value);
-            int count = results.rawlen;
-            for (int i = 1; i < count; i++) {
-                if (i & 1) {
-                    PD::print(results.rawbuf[i]*USECPERTICK);
-                }
-                else {
-                    PD::print('-');
-                    PD::print((unsigned long) results.rawbuf[i]*USECPERTICK);
-                }
-                PD::print(" ");
-            }
-            
-            output = results.rawbuf;
+            storeCode(&results);
             PD::update();
+            irrecv.resume(); // resume receiver
+            PD::print("Waiting for input or command.");
+             PD::update();
         }
-        
-        if(PC::buttons.aBtn()){
-            PD::print("Sending signal");
-            irsend.enableIROut(khz);
-            
-            irsend.sendRaw(output, sizeof(output)/sizeof(int), khz);
-            int count = results.rawlen;
-            for (int i = 1; i < count; i++) {
-                if (i & 1) {
-                    PD::print(results.rawbuf[i]*USECPERTICK);
-                }
-                else {
-                    PD::print('-');
-                    PD::print((unsigned long) results.rawbuf[i]*USECPERTICK);
-                }
-                PD::print(" ");
-            }
-            
-            PD::update();
-            irrecv.resume(); // Receive the next value
-        }
-
-        
     }
+    
+
+    
     
     return 0;
 }
