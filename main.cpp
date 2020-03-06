@@ -30,7 +30,7 @@ int codeLen; // The length of the code
 int toggle = 0; // The RC5/6 toggle state
 
 
-
+int readmode = 0;
 
 using PC=Pokitto::Core;
 using PD=Pokitto::Display;
@@ -49,12 +49,12 @@ void storeCode(decode_results *results) {
     for (int i = 1; i <= codeLen; i++) {
       if (i % 2) {
         // Mark
-        rawCodes[i - 1] = results->rawbuf[i]*USECPERTICK - MARK_EXCESS;
+        rawCodes[i - 1] = results->rawbuf[i]*USECPERTICK;// - MARK_EXCESS;
         PD::print(" m");
       } 
       else {
         // Space
-        rawCodes[i - 1] = results->rawbuf[i]*USECPERTICK + MARK_EXCESS;
+        rawCodes[i - 1] = results->rawbuf[i]*USECPERTICK;// + MARK_EXCESS;
         PD::print(" s");
       }
       PD::print(rawCodes[i - 1]);
@@ -75,7 +75,12 @@ int main(){
     
     while( PC::isRunning() ){
         
+        if(PC::buttons.bBtn()){
+            readmode = 1;
+        }
+        
         if(PC::buttons.aBtn()){
+            readmode = 0;
             PD::clear();
             PD::print("Sending signal");
             PD::update();
@@ -94,14 +99,14 @@ int main(){
             }
             wait(1);
             PD::update();
-        }else if (irrecv.decode(&results)) {
+        }else if (irrecv.decode(&results) && readmode == 1) {
             PD::clear();
             PD::printf("IR Received type = %d, code = %x\n", results.decode_type, results.value);
             storeCode(&results);
             PD::update();
             irrecv.resume(); // resume receiver
             PD::print("Waiting for input or command.");
-             PD::update();
+            PD::update();
         }
     }
     
