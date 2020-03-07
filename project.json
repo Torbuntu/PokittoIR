@@ -772,6 +772,12 @@
 		},
 		"/PokittoIR.bin.1.gif": {
 			"sdcard": false
+		},
+		"/pokittoIR.elf": {
+			"sdcard": false
+		},
+		"/pokittoIR.bin": {
+			"sdcard": false
 		}
 	}
 }

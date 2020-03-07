@@ -38,24 +38,22 @@ using PD=Pokitto::Display;
 // Stores the code for later playback
 // Most of this code is just logging
 void storeCode(decode_results *results) {
+    PD::print("Received code, saving as raw\n");
+    
     codeType = results->decode_type;
-    //int count = results->rawlen;
-    PD::print("Received unknown code, saving as raw\n");
+    
     codeLen = results->rawlen - 1;
     // To store raw codes:
     // Drop first value (gap)
     // Convert from ticks to microseconds
-    // Tweak marks shorter, and spaces longer to cancel out IR receiver distortion
     for (int i = 1; i <= codeLen; i++) {
       if (i % 2) {
         // Mark
-        rawCodes[i - 1] = results->rawbuf[i]*USECPERTICK;// - MARK_EXCESS;
-        PD::print(" m");
+        rawCodes[i - 1] = results->rawbuf[i]*USECPERTICK;
       } 
       else {
         // Space
-        rawCodes[i - 1] = results->rawbuf[i]*USECPERTICK;// + MARK_EXCESS;
-        PD::print(" s");
+        rawCodes[i - 1] = results->rawbuf[i]*USECPERTICK;
       }
       PD::print(rawCodes[i - 1]);
     }
