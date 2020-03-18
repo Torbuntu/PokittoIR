@@ -1,92 +1,110 @@
-#include "Pokitto.h"
+#include <Pokitto.h>
 #include <IRremote/IRremote.h>
 
-IRsend irsend(EXT0); // PWM output for IR blaster
-IRrecv irrecv(EXT3); //currently only 3+ works for the receiver. 
+// PWM output for IR blaster
+IRsend irSender(EXT0); 
 
-// Storage for the recorded code
-decode_results results; // results of reading an incoming signal
-int codeType = -1; // The type of code
-unsigned int rawCodes[RAWBUF]; // The durations if raw
-int codeLen; // The length of the code
-int readmode = 0; //read mode toggle. 0 = false, 1 = true
+// Currently only 3+ works for the receiver. 
+IRrecv irRecver(EXT3);
 
-using PC=Pokitto::Core;
-using PD=Pokitto::Display;
+// Results of reading an incoming signal
+decode_results results; 
+
+// The durations of the raw signal
+unsigned int rawCodes[RAWBUF]; 
+
+// The length of the code
+int codeLen; 
+
+// Read mode toggle. 0 = false, 1 = true
+bool readmode = false; 
+
 
 // Stores the code for later playback
-// Most of this code is just logging
 void storeCode(decode_results *results) {
-    PD::print("Received code, saving as raw\n");
+    using Pokitto::Display;
+    Display::print("Received code, saving as raw\n");
     
-    codeType = results->decode_type;
+    //Set here, also used when sending later.
+    codeLen = results -> rawlen - 1;
     
-    codeLen = results->rawlen - 1;
     // To store raw codes:
     // Drop first value (gap)
     // Convert from ticks to microseconds
-    for (int i = 1; i <= codeLen; i++) {
-        rawCodes[i - 1] = results->rawbuf[i]*USECPERTICK;
-        PD::print(rawCodes[i - 1]);
+    for(int i = 1; i <= codeLen; i++){
+        rawCodes[i - 1] = results -> rawbuf[i] * USECPERTICK;
+        Display::print(rawCodes[i - 1]);
     }
-    PD::print("");
+    Display::print("");
+}
+
+// Sends a saved code
+void sendCode(){
+    using Pokitto::Display;
+    readmode = false;
+    for(int i = 1; i < results.rawlen; i++){
+        if((i % 2) != 0){
+            Display::print(results.rawbuf[i] * USECPERTICK);
+        }else{
+            Display::print('-');
+            Display::print((unsigned long) results.rawbuf[i] * USECPERTICK);
+        }
+        Display::print(" ");
+    }
 }
 
 int main(){
     
-    PC::begin();
-    PD::persistence=true;
-    PD::invisiblecolor = 0;
-    PD::setFont(font5x7);
-    PD::print("PEX IR test\nPress B to scan or A to send.");
-    PD::update();
-    irrecv.enableIRIn();
+    using Pokitto::Core;
+    using Pokitto::Display;
     
-    while( PC::isRunning() ){
+    Core::begin();
+    
+    Display::persistence = true;
+    Display::invisiblecolor = 0;
+    Display::setFont(font5x7);
+    Display::print("PEX IR test\nPress B to scan or A to send.");
+    Display::update();
+    
+    irRecver.enableIRIn();
+    
+    while(Core::isRunning()){
         
-        if(PC::buttons.bBtn()){
-            PD::clear();
-            PD::print("Entered scan mode...\n");
-            PD::update();
-            readmode = 1;
+        if(Core::buttons.bBtn()){
+            Display::clear();
+            Display::print("Entered scan mode...\n");
+            Display::update();
+            
+            readmode = true;
         }
         
-        if(PC::buttons.aBtn()){
-            PD::clear();
-            PD::print("Sending signal\n");
+        if(Core::buttons.aBtn()){
+            Display::clear();
+            Display::print("Sending signal\n");
             
-            readmode = 0;
-            int count = results.rawlen;
-            for (int i = 1; i < count; i++) {
-                if (i & 1) {
-                    PD::print(results.rawbuf[i]*USECPERTICK);
-                } else {
-                    PD::print('-');
-                    PD::print((unsigned long) results.rawbuf[i]*USECPERTICK);
-                }
-                PD::print(" ");
-            }
-            PD::update();
+            sendCode();
             
+            Display::update();
             
-            irsend.sendRaw(rawCodes, codeLen, 38);
+            irSender.sendRaw(rawCodes, codeLen, 38);
             
+            Display::print("\nWaiting for signal to finish...");
+            Display::update();
             
-            PD::print("\nWaiting for signal to finish...");
-            PD::update();
             wait(1);//Give time to send result without receiving at the same time
-        } else if (irrecv.decode(&results) && readmode == 1) {
-            PD::clear();
-            PD::printf("IR Received type = %d, code = %x\n", results.decode_type, results.value);
+        }else if(irRecver.decode(&results) && readmode){
+            Display::clear();
+            Display::print("IR Received type = " + results.decode_type);
+            Display::print("code = " + results.value);
             
             storeCode(&results);
             
-            PD::update();//storeCode uses print()
+            Display::update();//storeCode uses print()
             
-            irrecv.resume(); // resume receiver
+            irRecver.resume(); // resume receiver
             
-            PD::print("Waiting for input or command.");
-            PD::update();
+            Display::print("Waiting for input or command.");
+            Display::update();
         }
     }
     
