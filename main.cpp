@@ -4,53 +4,55 @@
 // PWM output for IR blaster
 IRsend irSender(EXT0);
 
-//currently only 3+ works for the receiver. 
+// Currently only 3+ works for the receiver. 
 IRrecv irReceiver(EXT3); 
 
-// results of reading an incoming signal
+// Results of reading an incoming code
 decode_results results; 
 
 // The durations if raw
-unsigned int rawCodes[RAWBUF]; 
+unsigned int rawCode[RAWBUF]; 
 
 // The length of the code
-int codeLen; 
+std::size_t codeLength; 
 
+// The type denoting the current operation modes
 enum class Mode
 {
     Send,
     Scan,
 };
 
+// The variable containing the currently set opreation mode, defaulting to Send
 Mode mode = Mode::Send;
 
-// Stores the signal for later sending
+// Stores the code for later sending
 void storeCode(decode_results results) 
 {
     using Pokitto::Display;
     
-    // Used again when sending the signal
-    codeLen = results.rawlen - 1;
+    // codeLength is used again when sending the code, so we set it here
+    codeLength = results.rawlen - 1;
     
     // To store raw codes:
     // Drop first value (gap)
     // Convert from ticks to microseconds
-    for (int i = 1; i <= codeLen; i++)
+    for (int i = 1; i <= codeLength; ++i)
     {
-        rawCodes[i - 1] = results.rawbuf[i] * USECPERTICK;
+        rawCode[i - 1] = results.rawbuf[i] * USECPERTICK;
         
-        Display::print(rawCodes[i - 1]);
+        Display::print(rawCode[i - 1]);
         Display::print(" ");
     }
     Display::print("\n");
 }
 
-// Prints the code benig sent to the screen
+// Prints the code being sent to the screen
 void printSentCode()
 {
     using Pokitto::Display;
     
-    for (int i = 1; i < results.rawlen; i++) 
+    for (int i = 1; i < results.rawlen; ++i) 
     {
         if ((i % 2) != 0) 
         {
@@ -69,20 +71,22 @@ int main()
 {
     using Pokitto::Core;
     using Pokitto::Display;
+    using Pokitto::Buttons;
     
     Core::begin();
     
     Display::persistence = true;
     Display::invisiblecolor = 0;
     Display::setFont(font5x7);
+    
     Display::print("PEX IR test\nPress B to scan or A to send.\nC to open this menu.");
     
+    // Enable IR In on the receiver so it is ready to scan for IR codes.
     irReceiver.enableIRIn();
     
-    while(Core::isRunning())
+    while (Core::isRunning())
     {
-        
-        if (Core::buttons.cBtn())
+        if (Buttons::cBtn())
         {
             Display::clear();
             Display::print("Press B to scan or A to send.");
@@ -90,7 +94,7 @@ int main()
             mode = Mode::Send;
         }
         
-        if (Core::buttons.bBtn())
+        if (Buttons::bBtn())
         {
             Display::clear();
             Display::print("Entered scan mode...\n");
@@ -98,26 +102,22 @@ int main()
             mode = Mode::Scan;
         }
         
-        if (Core::buttons.aBtn())
+        if (Buttons::aBtn())
         {
+            // Immediately set mode to Send to prevent scanning the sent code
+            mode = Mode::Send;
+            
             Display::clear();
             Display::print("Sending signal:\n");
             
             printSentCode();
             
-            // Actually send code
-            irSender.sendRaw(rawCodes, codeLen, 38);
-            
-            Display::print("\nWaiting for signal to finish...");
-            Display::update();
-            
-            //Give time to send result without receiving at the same time
-            wait(1);
-            
+            // Send the currently stored code
+            irSender.sendRaw(rawCode, codeLength, 38);
         } 
         else if ((mode == Mode::Scan) && (irReceiver.decode(&results))) 
         {
-            // Enter Send mode to prevent capturing sent code
+            // Enter Send mode to prevent Scanning the code during Send
             mode = Mode::Send;
             
             Display::clear();
@@ -125,6 +125,7 @@ int main()
             Display::print(results.decode_type);
             Display::print("\ncode = ");
             Display::print(results.value);
+            Display::print("\n");
             
             storeCode(results);
             
