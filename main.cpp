@@ -10,7 +10,7 @@ IRrecv irReceiver(EXT3);
 // Results of reading an incoming code
 decode_results results; 
 
-// The durations if raw
+// The duration of the raw code
 unsigned int rawCode[RAWBUF]; 
 
 // The length of the code
@@ -23,7 +23,7 @@ enum class Mode
     Scan,
 };
 
-// The variable containing the currently set opreation mode, defaulting to Send
+// The variable containing the currently set operation mode, defaulting to Send
 Mode mode = Mode::Send;
 
 // Stores the code for later sending
@@ -61,7 +61,7 @@ void printSentCode()
         else
         {
             Display::print('-');
-            Display::print((unsigned long) results.rawbuf[i] * USECPERTICK);
+            Display::print(static_cast<unsigned long>(results.rawbuf[i]) * USECPERTICK);
         }
         Display::print(" ");
     }
